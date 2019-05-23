@@ -2,4 +2,4 @@
 
 # Usage:
 * Flags:
-- `-connection <connection string>` - Connection string
+  * `-connection <connection string>` - Connection string
