@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"flag"
+	"fmt"
 	"log"
 	"os"
 
@@ -9,9 +11,16 @@ import (
 )
 
 func main() {
-	connStr := os.Getenv("POSTGRES_CONNECTION")
+	var connStr string
+	flag.StringVar(&connStr, "connection", "", "Connection string")
+	flag.Parse()
+
+	if len(os.Args) == 1 {
+		flag.Usage()
+	}
+
 	if connStr == "" {
-		log.Fatal("No connection string. Please provide one using the $POSTGRES_CONNECTION environment variable")
+		log.Fatal("No connection string. Please provide one using the '-connection <string>' flag")
 	}
 
 	db, err := sql.Open("postgres", connStr)
@@ -23,4 +32,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("PING")
 }
